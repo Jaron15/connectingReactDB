@@ -6,15 +6,14 @@ import './App.css';
 function App() {
   const [movies, setMovies] = useState([]);
 
-  function fetchMoviesHandler() {
+  async function fetchMoviesHandler() {
     // GET request
-    fetch('https://swapi.dev/api/films/')
+    const response = await fetch('https://swapi.dev/api/films/');
+    
     // take the response and return it converted to json format
-    .then(response => {
-      return response.json();
-    })
+    const data = await response.json();
+
     // take the json data and map the results into a new array of objects called transformedMovies
-    .then(data => {
       const transformedMovies = data.results.map(movieData => {
         // take out the data you want to use from each object(movieData)
         return {
@@ -26,7 +25,7 @@ function App() {
       });
       // set the movies state to the new array of objects returned
       setMovies(transformedMovies);
-    });
+
   }
 
   return (
